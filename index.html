@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Aula 01</title>
+    <meta charset="utf8">
+    <style>
+        * {
+            margin: 0;
+            outline: 0;
+            padding: 0;
+        }
+
+        #header {
+            width: 100%;
+            height: 50px;
+            background-color: darkcyan;
+            padding: 5px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+            font-weight: 600;
+            letter-spacing: -1px;
+            font-size: 15pt;
+        }
+
+        #body {
+            width: 100%;
+            height: 920px;
+            background-color: aliceblue;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        #body div {
+            width: 20%;
+        }
+
+        #dados {
+            width: 100%;
+            height: 40px;
+            font-size: 15pt;
+            padding: 5px;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 3px solid darkcyan;
+            background-color: transparent;
+        }
+
+        #botao {
+            width: 100%;
+            height: 40px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: none;
+            background-color: teal;
+            color: white;
+            font-weight: 800;
+            font-size: 15pt;
+        }
+
+        #conteudo {
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 5px;
+            box-sizing: border-box;
+            font-size: 15pt;
+            font-weight: 600;
+            letter-spacing: -1px;
+        }
+
+        #resultado {
+            width: 500px;
+            border-radius: 10px;
+            height: 500px;
+            margin-top: 5px;
+            background-color: slategray;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /*text-shadow: 1px 1px 5px #000;*/
+            overflow: scroll;
+        }
+
+        #resultado .blocos {
+            width: 95%;
+            height: 50px;
+            background-color: teal;
+            font-family: Arial, Helvetica, sans-serif;
+            letter-spacing: -1px;
+            color: white;
+            font-weight: 600;
+            font-size: 15pt;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+            margin: 10px 0 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="header">
+            Programaê, favela
+        </div>
+        <div id="body">
+            <div id="resultado">
+            </div>
+            <div>
+                <!--<label id="conteudo">Digite seu nome:</label><br />-->
+                <input type="text" id="dados" placeholder="Digite seu nome...">
+            </div>
+            <div>
+                <button id="botao" onclick="incrementar()">Click-me</button>
+            </div>
+
+        </div>
+    </div>
+    <script>
+
+        var informacao = []
+        var storage = localStorage
+        var resultados = JSON.parse(storage.getItem("nomes"))
+            ? JSON.parse(storage.getItem("nomes"))
+            : []
+
+        var resultado = document.getElementById("resultado")
+
+        function incrementar() {
+            if (document.getElementById("dados").value !== "") {
+                var nome = (document.getElementById("dados").value).split("")
+
+                var letra = nome[0].toUpperCase();
+                nome[0] = letra
+                nome = nome.join("")
+                informacao.push(nome)
+
+                storage.setItem("nomes", JSON.stringify(informacao))
+                resultado.innerHTML = ""
+                for (var it of resultados) {
+                    var div = document.createElement("div")
+                    div.className = "blocos"
+                    div.innerText = it
+                    resultado.appendChild(div)
+                }
+
+            } else {
+                document.getElementById("resultado").innerText = "";
+            }
+        }
+
+    </script>
+</body>
+
+</html>
